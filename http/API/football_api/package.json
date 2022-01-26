@@ -1,0 +1,21 @@
+{
+  "name": "football_api",
+  "version": "1.0.0",
+  "description": "a simple football api",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "dev": "nodemon server.js"
+  },
+  "keywords": [
+    "api",
+    "node",
+    "nodemon",
+    "http"
+  ],
+  "author": "ubani friday",
+  "license": "ISC",
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
