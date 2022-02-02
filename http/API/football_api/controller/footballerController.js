@@ -29,80 +29,52 @@ const getTeam = async(req, res, id)=>{
 }
 
 // create a static team
-const addTeam = async (req, res) =>{
+const createNewTeam = async (req, res) =>{
     try{
-        const fakeData = {
-            club: "ajax",
+        // create a fake object having some data
+        const bodyData = {
+            club: "sevilla",
             player: 25,
-            country: "Holland"
+            country: "Spain"
         }
 
-        const newData = await FootballModel.create(fakeData)
+        const newTeam = await FootballModel.create(bodyData)  
         res.writeHead(201, {'Content-Type': 'application/json'})
-        res.end(JSON.stringify(newData))
+        res.end(JSON.stringify(newTeam))      
+
     }catch(error){
         console.log(error.message)
     }
 }
 
-// create dynamic team
-const addDynamicTeam = async (req, res) =>{
+// creating a dynamic team
+const createNewDynamicTeam = async (req, res) =>{
     try{
         let body = ''
         req.on('data', function(chunk){
             body += chunk.toString()
         })
-        req.on('end', async function(){
-            const {club, player, country} = JSON.Parse(body)
-
-            const fakeData = {
+        req.on('end', async function() {
+            const {club, player, country} = JSON.parse(body)
+            const bodyData = {
                 club,
                 player,
                 country
             }
-
-            const newData = await FootballModel.create(fakeData)
-            res.writeHead(201, {'content-type': 'application/json'})
-            res.end(JSON.stringify(newData),)
+            const newTeam = await FootballModel.createDynamic(bodyData)  
+            res.writeHead(201, {'Content-Type': 'application/json'})
+            res.end(JSON.stringify(newTeam))
         })
     }catch(error){
         console.log(error.message)
     }
 }
-// update a team
-const updateOneTeam = async (req, res, id) => {
-    try{
-        const teamID = FootballModel.oneTeam(id)
-        if(!teamID){
-            res.writeHead(404, {'Content-Type': 'application/json'})
-            res.end(JSON.stringify({"message": "Team not found"}))
-        }else{
-            let body = ''
-            req.on('data', function(chunk){
-                body += chunk.toString()
-            })
-            req.on('end',async function(){
-                const {club, player, country} = JSON.parse(body)
-                const bodyData = {
-                    club: club || FootballModel.club,
-                    player: player || FootballModel.player,
-                    country: country || FootballModel.country
-                }
 
-                const updatedTeam = await FootballModel.update(id, bodyData)
-                res.writeHead(200, {'Content-Type': 'application/json'})
-                res.end(JSON.stringify(updatedTeam))
-            })
-            
-        }
-    }catch(error){
-        console.log(error)
-    }
-}
 module.exports = {
     getTeams,
     getTeam,
-    addTeam,
-    addDynamicTeam,
-    updateOneTeam
+    createNewTeam,
+    createNewDynamicTeam
 }
+
+const [body, setBody] = useState('')

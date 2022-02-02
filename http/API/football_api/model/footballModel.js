@@ -17,30 +17,25 @@ const oneTeam = (id)=>{
 
 const create = (team) =>{
     return new Promise((resolve, reject)=>{
-        const newTeam = {id: uuidv4(), ...team}
-        FootballData.push(newTeam)
-        // write the team to the file
+        // get an id for the new team
+        const teamID = {id: uuidv4(), ...team}
+        // add the newTeam to the previous array using its id.
+        FootballData.push(teamID)
+        // write the new array to a file
         writeToFile('./data/dummy.json', FootballData)
-        resolve(newTeam)
+        resolve(teamID)
     })
 }
 
-const createDynamicTeam = (team) =>{
+const createDynamic = (team) =>{
     return new Promise((resolve, reject)=>{
-        const newTeam = {id: uuidv4(), ...team}
-        FootballData.push(newTeam)
-        // save the newTeam to file
+        // get an id for the new team
+        const teamID = {id: uuidv4(), ...team}
+        // add the newTeam to the previous array using its id.
+        FootballData.push(teamID)
+        // write the new array to a file
         writeToFile('./data/dummy.json', FootballData)
-        resolve(newTeam)
-    })
-}
-
-const update = (id, team) =>{
-    return new Promise((resolve, reject)=>{
-        const index = FootballData.findIndex((i)=>(i.id === id))
-        FootballData[index] = {id, ...team}
-        writeToFile('./data/dummy.json', FootballData)
-        resolve(FootballData[index])
+        resolve(teamID)
     })
 }
 
@@ -49,6 +44,5 @@ module.exports = {
     allTeam,
     oneTeam,
     create,
-    createDynamicTeam,
-    update
+    createDynamic
 }
