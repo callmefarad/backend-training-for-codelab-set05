@@ -1,4 +1,4 @@
-const FootballData = require('../data/dummy.json')
+let FootballData = require('../data/dummy.json')
 const {v4: uuidv4} = require('uuid')
 const {writeToFile} = require('../utils')
 
@@ -39,10 +39,36 @@ const createDynamic = (team) =>{
     })
 }
 
+const update = (id, team) =>{
+    return new Promise((resolve, reject) =>{
+        // get the index of the object
+        const index = FootballData.findIndex((f)=> f.id === id)
+        // get the actual object based on its id and fields
+        FootballData[index] = {id, ...team}
+        // write the object to file
+        writeToFile('./data/dummy.json', FootballData)
+        // resolve the data
+        resolve(FootballData[index])
+    })
+}
+
+function remove(id){
+    return new Promise(function(resolve, reject){
+        // filter the object id
+        team = FootballData.filter((f)=> f.id !== id)
+        // write to file
+        writeToFile('./data/dummy.json', team)
+        resolve()
+    })
+}
+
+
 
 module.exports = {
     allTeam,
     oneTeam,
     create,
-    createDynamic
+    createDynamic,
+    update,
+    remove
 }
