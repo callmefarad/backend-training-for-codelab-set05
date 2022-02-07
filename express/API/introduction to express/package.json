@@ -1,0 +1,22 @@
+{
+  "name": "introduction-to-express",
+  "version": "1.0.0",
+  "description": "beginner session on nodejs",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js",
+    "Dev": "nodemon server.js"
+  },
+  "keywords": [
+    "node",
+    "express"
+  ],
+  "author": "ubani",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.2"
+  },
+  "devDependencies": {
+    "nodemon": "^2.0.15"
+  }
+}
