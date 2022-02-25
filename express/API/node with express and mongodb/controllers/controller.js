@@ -69,7 +69,10 @@ const getOne = async ( req, res ) => {
 const updateOne = async ( req, res ) => {
     try {
         const id = req.params.id
-        const updatedFuel = await sampleModel.findByIdAndUpdate(id, req.body, {new: true})
+        const updatedFuel = await sampleModel.findByIdAndUpdate( id, req.body, {
+            new: true,
+            runValidators: true
+        } )
         res.status( 200 ).json( {
             status: "success",
                 data: {
@@ -79,7 +82,7 @@ const updateOne = async ( req, res ) => {
     } catch ( error ) {
         res.status( 204 ).json( {
             status: fail,
-           message: `fuel station id ${id}not found` 
+            message: `fuel station id ${id}not found` 
         })
     }
 

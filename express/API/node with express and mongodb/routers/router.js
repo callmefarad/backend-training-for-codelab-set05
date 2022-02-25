@@ -13,12 +13,14 @@ const router = express.Router()
 
 // METHOD TWO
 // ROUTE WITHOUT ID
-router.route( '/fuelStation' )
+router
+    .route( '/fuelStation' )
     .get( getAll )
     .post( createFuel )
 
 // ROUTE WITH ID
-router.route( '/fuelStation/:id' )
+router
+    .route( '/fuelStation/:id' )
     .get( getOne )
     .patch( updateOne )
     .delete( deleteOne )
