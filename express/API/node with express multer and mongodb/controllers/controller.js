@@ -1,6 +1,7 @@
 const fs = require('fs');
 const sampleModel = require( '../models/model' )
 
+
 // POST
 const createFuel = async ( req, res ) => {
     try {
@@ -43,10 +44,11 @@ const getAll = async ( req, res ) => {
 
 // get one
 const getOne = async ( req, res ) => {
+    // METHOD 1
     try{
         const id = req.params.id
         const fuelStation = await sampleModel.findById( id )
-        if ( !id ) {
+        if ( !fuelStation ) {
             res.status( 404 ).json( {
                 status: 'Fail',
                 message: `No fuel station with this id: ${id}`
@@ -69,39 +71,19 @@ const getOne = async ( req, res ) => {
 // updateOne
 
 const updateOne = async ( req, res ) => {
+    // METHOD 1
     try {
         const id = req.params.id
-        const fuelStation = await sampleModel.findById(id)
-        // await fs.unlinkSync( fuelStation.image );
-
-        if ( !fuelStation ) {
+        if ( !id ) {
             res.status( 404 ).json( {
                 status: 'fail',
                 message: `Can not find fuel station with this id: ${id}`
             })
         }
-        const data = {
-            name: req.body.name,
-            location: req.body.location,
-            createBy: req.body.createBy,
-            image: req.file.path
-        }
-        // fuelStation.name = req.body.name,
-        // fuelStation.location = req.body.location,
-        // fuelStation.createBy = req.body.createBy,
-        // fuelStation.image = req.file.path
-
-        const updatedFuel = await fuelStation.updateOne( data )
-        res.status( 200 ).json( {
-            status: "success",
-                data: {
-                    updatedFuel
-            }
-        })
-        // const updatedFuel = await sampleModel.findByIdAndUpdate( id, data, {
-        //     new: true,
-        //     runValidator: true
-        // } )
+        const updatedFuel = await sampleModel.findByIdAndUpdate( id, req.body, {
+            new: true,
+            runValidator: true
+        } )
         res.status( 200 ).json( {
             status: "success",
                 data: {
@@ -109,11 +91,42 @@ const updateOne = async ( req, res ) => {
             }
         })
     } catch ( error ) {
-        res.status( 204 ).json( {
+        res.status( 404 ).json( {
             status: 'fail',
             message: error.message
         })
     }
+
+    // METHOD 2
+    // try {
+    //     const id = req.params.id
+    //     const fuelStation = await sampleModel.findById(id)
+    //     if ( !fuelStation ) {
+    //         res.status( 404 ).json( {
+    //             status: 'fail',
+    //             message: `Can not find fuel station with this id: ${id}`
+    //         })
+    //     }
+
+    //     const updatedFuel = await fuelStation.updateOne( req.body, {new: true, runValidator: true} )
+    //     res.status( 200 ).json( {
+    //         status: "success",
+    //             data: {
+    //                 updatedFuel
+    //         }
+    //     })
+    //     res.status( 200 ).json( {
+    //         status: "success",
+    //             data: {
+    //                 updatedFuel
+    //         }
+    //     })
+    // } catch ( error ) {
+    //     res.status( 404 ).json( {
+    //         status: 'fail',
+    //         message: error.message
+    //     })
+    // }
 
 }
 
