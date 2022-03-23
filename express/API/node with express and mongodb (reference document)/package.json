@@ -1,0 +1,24 @@
+{
+  "name": "node-with-express-and-mongodb-(reference-document)",
+  "version": "1.0.0",
+  "description": "express API with seperate schemas using ref and populate",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node server.js"
+  },
+  "keywords": [
+    "express",
+    "mongodb",
+    "node",
+    "reference",
+    "populate",
+    "schema"
+  ],
+  "author": "Ubani U. Friday",
+  "license": "ISC",
+  "dependencies": {
+    "express": "^4.17.3",
+    "mongoose": "^6.2.8"
+  }
+}
