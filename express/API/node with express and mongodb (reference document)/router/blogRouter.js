@@ -12,19 +12,19 @@ router
     .delete( deleteAll )
 
 router
-    .route( '/blog/:id' )
+    .route( '/blog/:blogId' )
     .get( singleBlog )
     .patch( updateBlog )
     .delete( removeBlog )
     
 router
-    .route( '/blog/:id/comment' )
+    .route( '/blog/:blogId/comment' )
     .get(allComment)
     .post( newComment )
     .delete(removeAllComment)
 
 router
-    .route( '/blog/:id/comment/:id' )
+    .route( '/blog/:blogId/comment/:commId' )
     .get( singleComment )
     .patch( updateComment )
     .delete( removeComment )
