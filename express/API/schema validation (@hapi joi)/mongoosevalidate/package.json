@@ -4,7 +4,8 @@
   "description": "How to validate schema keys",
   "main": "index.js",
   "scripts": {
-    "start": "node server.js"
+    "start": "node server.js",
+    "dev": "nodemon server.js"
   },
   "keywords": [
     "node",

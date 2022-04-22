@@ -1,23 +1,24 @@
 const codeLabModel = require( '../model/codelab' )
-const {studentValidation} = require( '../validateStudent')
-
+// import the validator module
+const {validateUser} = require('../validateStudent')
 
 // create a student
 const newStudent = async (req, res) => {
     try {
-        const studentData = req.body
-        // extract error from validation module
-        const { error } = studentValidation( studentData )
+        const { error } = validateUser( req.body )
         if ( error ) {
-            res.status( 400 ).json( {
+            res.status( 409 ).json( {
+                status: "Failed",
                 message: error.details[0].message
-            })
-        }
-        const student = await codeLabModel.create( studentData )
-        res.status( 201 ).json( {
+            } )
+        } else {
+            const student = await codeLabModel.create( req.body )
+            res.status( 201 ).json( {
             status: "success",
             data: student
-        })
+        } )
+        }
+      
     } catch ( error ) {
         res.status( 409 ).json( {
             status: 'Failed',
@@ -29,7 +30,8 @@ const newStudent = async (req, res) => {
 // get all students
 const allStudent = async ( req, res ) => {
     try {
-        const students = await codeLabModel.find()
+        query = await codeLabModel.find()
+        let students = await query
         const noStudent = students.length
         if ( students.length < 1 ) {
             res.status( 404 ).json( {
@@ -45,7 +47,7 @@ const allStudent = async ( req, res ) => {
     } catch ( error ) {
         res.status( 404 ).json( {
             status: 'Failed',
-            message: 'error.message'
+            message: error.message
         })
     }
 }
@@ -69,14 +71,13 @@ const singleStudent = async ( req, res ) => {
 // update a student 
 const updateStudent = async ( req, res ) => {
     try {
-        const studentData = req.body
-        const { error } = studentValidation( studentData )
+        const { error } = validateUser( req.body )
         if ( error ) {
             res.status(500).json( {
                 message: error.details[0].message
             })
         }
-        const updatedStudent = await codeLabModel.findByIdAndUpdate( req.params.id, studentData, { new: true } );
+        const updatedStudent = await codeLabModel.findByIdAndUpdate( req.params.id, req.body, {new: true});
         res.status( 200 ).json( {
             status: 'success',
             data: updatedStudent

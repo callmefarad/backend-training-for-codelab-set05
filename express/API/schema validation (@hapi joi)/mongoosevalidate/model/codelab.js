@@ -3,13 +3,21 @@ const mongoose = require( 'mongoose' );
 
 const codeLabSchema = mongoose.Schema( {
     name: {
-        type: String
+        type: String,
+        required: true,
+        unique: true
     },
     institution: {
-        type: String
+        type: String,
+        required: true
     },
     course: {
-        type: String
+        type: String,
+        required: true
+    },
+    married: {
+        type: Boolean,
+        required: true
     }
 }, {timestamps: true} );
 

@@ -1,15 +1,14 @@
-// import the validator library (hapi/joi)
-const joi = require( '@hapi/joi' )
+// import the validator library
+const hapiJoy = require( '@hapi/joi' ) 
 
-// validation function
-const studentValidation = ( studentData ) => {
-    // pass the validated field to a variable
-    const validatedField = joi.object( {
-        name: joi.string().required().min( 3 ),
-        institution: joi.string().required(),
-        course: joi.string().required()
+// create a validator function
+const validateUser = (data) => {
+    const validateMe = hapiJoy.object( {
+        name: hapiJoy.string().min(3).max(20),
+        institution: hapiJoy.string(),
+        course: hapiJoy.string(),
+        married: hapiJoy.boolean()
     } )
-    return validatedField.validate(studentData)
+    return validateMe.validate(data)
 }
-
-module.exports.studentValidation = studentValidation
+module.exports.validateUser = validateUser;
