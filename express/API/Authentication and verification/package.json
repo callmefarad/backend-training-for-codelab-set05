@@ -1,0 +1,31 @@
+{
+  "name": "userauthenticationandverification",
+  "version": "1.0.0",
+  "description": "How to validate schema keys",
+  "main": "index.js",
+  "scripts": {
+    "start": "node server.js"
+  },
+  "keywords": [
+    "node",
+    "express",
+    "hapi",
+    "joi",
+    "mongoose",
+    "mongodb",
+    "expressjwt",
+    "jsonwebtoken",
+    "nodemon",
+    "bcrypt"
+  ],
+  "author": "",
+  "license": "ISC",
+  "dependencies": {
+    "@hapi/joi": "^17.1.1",
+    "bcrypt": "^5.0.1",
+    "express": "^4.17.3",
+    "express-jwt": "^7.4.3",
+    "jsonwebtoken": "^8.5.1",
+    "mongoose": "^6.3.0"
+  }
+}
