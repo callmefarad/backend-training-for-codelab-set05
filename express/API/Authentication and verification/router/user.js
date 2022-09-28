@@ -1,7 +1,7 @@
 const express = require( 'express' )
 const router = express.Router()
-const {signUp, signIn, testPage} = require('../controller/user')
-// const {isSignedIn} = require('../userAuthorization')
+const {signUp, signIn, allUsers, testPage} = require('../controller/user')
+const {isSignedIn} = require('../userAuthorization')
 
 
 router
@@ -13,7 +13,11 @@ router
     .post( signIn )
 
 router
-    .route( '/private' )
+    .route( '/user' )
+    .get( allUsers )
+
+router
+    .route( '/private', isSignedIn)
     .get(testPage)
 
 

@@ -1,33 +1,22 @@
 const express = require( 'express' );
 const router = express.Router();
-const { getAllBlog, newBlog, updateBlog, removeBlog, deleteAll, newComment, allComment, singleBlog, singleComment, updateComment, removeComment, removeAllComment } = require('../controller/blogController');
+const { getAllBlog, newBlog, updateBlog, removeBlog, deleteAll, singleBlog} = require('../controller/blogController');
 
 
 
-// route for endpoints
+// routes for blog endpoints
 router
-    .route( '/blog' )
-    .get( getAllBlog )
-    .post( newBlog )
-    .delete( deleteAll )
+    .route( '/blog' ) // universal route
+    .get( getAllBlog ) // Get all blog
+    .post( newBlog ) // Post a blog
+    .delete( deleteAll ) // Delete a blog
 
 router
-    .route( '/blog/:blogId' )
-    .get( singleBlog )
-    .patch( updateBlog )
-    .delete( removeBlog )
+    .route( '/blog/:blogId' ) // universal route
+    .get( singleBlog ) // Get a blog
+    .patch( updateBlog ) // Update a blog
+    .delete( removeBlog ) // Delete a blog
     
-router
-    .route( '/blog/:blogId/comment' )
-    .get(allComment)
-    .post( newComment )
-    .delete(removeAllComment)
-
-router
-    .route( '/blog/:blogId/comment/:commId' )
-    .get( singleComment )
-    .patch( updateComment )
-    .delete( removeComment )
 
 // expose this module
 module.exports = router

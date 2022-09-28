@@ -1,151 +1,20 @@
-const blogModel = require( '../model/blogModel' )
-const commentModel = require('../model/commentModel')
+const blogModel = require( '../model/blogModel' );
+const commentModel = require( '../model/commentModel' );
 
-// get all blogs
-const getAllBlog = async (req, res) => {
-    try {
-        // get all the documents in the databse
-        const blogs = await blogModel.find();
-        // return a response
-        res.status( 200 ).json( {
-            status: "success",
-            data: blogs
-        } );
-        // return any available error 
-    } catch(error) {
-        res.status( 404 ).json( {
-            status: 'fail',
-            message: error.message
-        } );
-    }
-}
-
-// create new blog
-const newBlog = async ( req, res ) => {
-    try {
-        // defining the needed data 
-        const data = {
-            title: req.body.title,
-            content: req.body.content
-        }
-        // create a new blog
-        const blog = await blogModel.create( data )
-        // return a response
-        res.status( 201 ).json( {
-            status: 'success',
-            data: blog
-        } )
-        // return any possible error
-    } catch ( e ) {
-        res.status( 400 ).json( {
-            status: "fail",
-            message: e.message
-        })
-    }
-}
-
-// get a blog
-const singleBlog = async ( req, res ) => {
-    try {
-        // grab the id
-        const blogId = req.params.blogId
-        // get tht object of the id
-        const blog = await blogModel.findById( blogId )
-        // get the response
-        res.status( 200 ).json( {
-            status: "success",
-            data: blog
-        } )
-        // get the possible error
-    } catch ( error ) {
-        res.status( 404 ).json( {
-            status: 'fail',
-            message: error.message
-        })
-    }
-}
-
-// update a blog
-const updateBlog = async ( req, res ) => {
-    try {
-        // grab the id from the uir
-        const blogId = req.params.blogId;
-        // get the object
-        const blog = await blogModel.findById( blogId );
-        // get the content of the body
-        const data = req.body
-        // update the selected blog
-        const updatedBlog = await blogModel.findByIdAndUpdate( blog, data, { new: true } )
-        // return a response
-        res.status( 200 ).json( {
-            status: 'success',
-            data: updatedBlog
-        } )
-        // return any possible error
-    } catch ( error ) {
-        res.status( 500 ).json( {
-            status: 'fail',
-            message: error.message
-        })
-    }
-}
-
-// delete a blog
-const removeBlog = async ( req, res ) => {
-    try {
-        // get the id from the parameter
-        const blogId = req.params.blogId
-        // remove the document
-        await blogModel.findByIdAndRemove( blogId )
-        // return a response
-        res.status( 200 ).json( { 
-            status: 'success',
-            message: 'deleted successfully'
-        } )
-        // return any possible error
-    } catch ( error ) {
-        res.status( 200 ).json( {
-            status: 'fail',
-            message: error.message
-        })
-    }
-}
-
-// remove all blogs
-const deleteAll = async ( req, res ) => {
-    try {
-        const allBlogs = await blogModel.deleteMany()
-        // return response
-        res.status( 200 ).json( {
-            status: "success",
-            message: 'deleted successfully'
-        } )
-        // return any possible error
-    } catch ( e ) {
-        res.status( 400 ).json( {
-            status: 'fail',
-            message: e.message
-        })
-    }
-}
-
-
-
-// controllers for comment.
-// create a comment
+// create new comment
 const newComment = async ( req, res ) => {
     try {
         // get the blog id
         const blogId = req.params.blogId
-        // get the blog with this id
+        // get the blog with the above id
         const blog = await blogModel.findById(blogId)
         // create a new comment
         const comm = new commentModel( req.body )
-        // assign the new comment to the associated blog
+        // assign the comment to the blog
         comm.poster = blog;
         // save the comment
         comm.save();
-        // add the comment to the blog comments array
+        // add the comment to the comments array in the blog model
         blog.comments.push( comm )
         // save the blog
         await blog.save()
@@ -166,7 +35,7 @@ const newComment = async ( req, res ) => {
 // get all the comments
 const allComment = async ( req, res ) => {
     try {
-        // get the blogo id
+        // get the blog id
         const blogId = req.params.blogId;
         // get the blog associated to this id
         const blog = await blogModel.findById( blogId ).populate('comments');
@@ -278,16 +147,10 @@ const removeAllComment = async ( req, res ) => {
 }
 
 module.exports = {
-    getAllBlog,
-    newBlog,
-    singleBlog,
-    updateBlog,
-    removeBlog,
-    deleteAll,
     newComment,
     allComment,
     singleComment,
     updateComment,
     removeComment,
-    removeAllComment
+    removeAllComment,
 }
